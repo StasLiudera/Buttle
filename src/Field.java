@@ -21,7 +21,7 @@ public class Field {
 
         this.coordinates = new Coordinate[this.fieldVerticalSize][this.fieldHorizontalSize];
         this.shipsCount = GetShipsCount(
-                Math.min(this.fieldVerticalSize, this.fieldHorizontalSize),
+                Math.max(this.fieldVerticalSize, this.fieldHorizontalSize),
                 this.fieldVerticalSize * this.fieldHorizontalSize / 5,
                 hardness
         );
@@ -60,9 +60,9 @@ public class Field {
         int realShipsArrayLength = 1;
         shipsArray[0] = coordinatesCount;
 
-        while (shipsArray[0] - shipsArray[1] > hardnessCoefficient) {
+        while (shipsArray[0]-shipsArray[1]-3 >= hardnessCoefficient) {
             for (int i = realShipsArrayLength; i >= 1; i--) {
-                if (shipsArray[i-1]-shipsArray[i]-1 >= hardnessCoefficient && shipsArray[0]-i-1-shipsArray[1] >= hardnessCoefficient) {
+                if (shipsArray[i-1]-shipsArray[i]-1 >= hardnessCoefficient && shipsArray[0]-i-1-shipsArray[1]-(i==1?1:0) >= hardnessCoefficient) {
                     shipsArray[i]++;
                     shipsArray[0] = shipsArray[0]-i-1;
                     if (realShipsArrayLength < i+1) {
@@ -73,7 +73,7 @@ public class Field {
             }
         }
 
-        int [] realShipsArray = new int[realShipsArrayLength];
+        int[] realShipsArray = new int[realShipsArrayLength];
         for (int i = 0; i < realShipsArrayLength; i++ ) {
             realShipsArray[i] = shipsArray[i];
         }
